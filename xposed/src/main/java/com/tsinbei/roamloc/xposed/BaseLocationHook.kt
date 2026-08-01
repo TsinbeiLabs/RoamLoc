@@ -44,13 +44,12 @@ abstract class BaseLocationHook: BaseDivineService() {
         location.latitude = jitterLat.first
         location.longitude = jitterLat.second
         location.altitude = FakeLoc.offset_altitude
-        val speedAmp = Random.nextDouble(-FakeLoc.speedAmplitude, FakeLoc.speedAmplitude)
-        location.speed = (originLocation.speed + speedAmp).toFloat()
+        location.speed = FakeLoc.simulatedSpeed()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && originLocation.hasSpeedAccuracy()) {
-            location.speedAccuracyMetersPerSecond = (FakeLoc.speed + speedAmp).toFloat()
+            location.speedAccuracyMetersPerSecond = originLocation.speedAccuracyMetersPerSecond
         }
 
-        if (location.altitude == 0.0) {
+        if (FakeLoc.enableLocationJitter && location.altitude == 0.0) {
             location.altitude = 80.0
         }
 
@@ -72,10 +71,6 @@ abstract class BaseLocationHook: BaseDivineService() {
             }
         }
 
-        if (location.speed == 0.0f) {
-            location.speed = 1.2f
-        }
-
         location.elapsedRealtimeNanos = originLocation.elapsedRealtimeNanos
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             location.elapsedRealtimeUncertaintyNanos = originLocation.elapsedRealtimeUncertaintyNanos
@@ -90,7 +85,8 @@ abstract class BaseLocationHook: BaseDivineService() {
             location.extras = Bundle()
         }
         location.extras?.putDouble("latlon", location.latitude + location.longitude)
-        location.extras?.putInt("satellites", Random.nextInt(8, 45))
+        val minSatellites = FakeLoc.minSatellites.coerceIn(0, 35)
+        location.extras?.putInt("satellites", Random.nextInt(minSatellites, 36))
         location.extras?.putInt("maxCn0", Random.nextInt(30, 50))
         location.extras?.putInt("meanCn0", Random.nextInt(20, 30))
         location.extras?.remove("roamloc.enable")

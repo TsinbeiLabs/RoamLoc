@@ -103,6 +103,7 @@ abstract class BaseDivineService {
             FakeLoc.longitude = rely.getDouble("longitude", FakeLoc.longitude)
             FakeLoc.altitude = rely.getDouble("altitude", FakeLoc.offset_altitude)
             FakeLoc.speed = rely.getDouble("speed", FakeLoc.speed)
+            FakeLoc.accuracy = rely.getFloat("accuracy", FakeLoc.accuracy)
             FakeLoc.speedAmplitude = rely.getDouble("speed_amplitude", FakeLoc.speedAmplitude)
             FakeLoc.hasBearings = rely.getBoolean("has_bearings", FakeLoc.hasBearings)
             FakeLoc.bearing = rely.getDouble("bearing", FakeLoc.bearing)
@@ -121,6 +122,8 @@ abstract class BaseDivineService {
             FakeLoc.hideMock = rely.getBoolean("hide_mock", FakeLoc.hideMock)
             FakeLoc.hookWifi = rely.getBoolean("hook_wifi", FakeLoc.hookWifi)
             FakeLoc.needDowngradeToCdma = rely.getBoolean("need_downgrade_to_2g", FakeLoc.needDowngradeToCdma)
+            FakeLoc.minSatellites = rely.getInt("min_satellites", FakeLoc.minSatellites).coerceIn(0, 35)
+            FakeLoc.enableLocationJitter = rely.getBoolean("enable_location_jitter", FakeLoc.enableLocationJitter)
             Logger.debug("Synced config for DivineService")
         } else {
             Logger.error("Failed to sync config for DivineService")

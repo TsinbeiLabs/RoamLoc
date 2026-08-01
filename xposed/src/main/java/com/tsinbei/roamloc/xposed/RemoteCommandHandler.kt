@@ -219,10 +219,8 @@ object RemoteCommandHandler {
                 val disableRegisterLocationListener = rely.getBoolean("disable_register_location_listener", FakeLoc.disableRegisterLocationListener)
                 val disableFusedLocation = rely.getBoolean("disable_fused_location", FakeLoc.disableFusedLocation)
                 val needDowngradeToCdma = rely.getBoolean("need_downgrade_to_2g", FakeLoc.needDowngradeToCdma)
-                var minSatellites = rely.getInt("min_satellites", 12)
-                if (minSatellites < 0) {
-                    minSatellites = 12
-                }
+                val minSatellites = rely.getInt("min_satellites", FakeLoc.minSatellites).coerceIn(0, 35)
+                val enableLocationJitter = rely.getBoolean("enable_location_jitter", FakeLoc.enableLocationJitter)
 
                 val enableAGPS = rely.getBoolean("enable_agps", FakeLoc.enableAGPS)
                 val enableNMEA = rely.getBoolean("enable_nmea", FakeLoc.enableNMEA)
@@ -239,6 +237,7 @@ object RemoteCommandHandler {
                 FakeLoc.disableFusedLocation = disableFusedLocation
                 FakeLoc.needDowngradeToCdma = needDowngradeToCdma
                 FakeLoc.minSatellites = minSatellites
+                FakeLoc.enableLocationJitter = enableLocationJitter
                 FakeLoc.enableAGPS = enableAGPS
                 FakeLoc.enableNMEA = enableNMEA
                 FakeLoc.disableRequestGeofence = disableRequestGeofence
@@ -251,6 +250,7 @@ object RemoteCommandHandler {
                 rely.putDouble("longitude", FakeLoc.longitude)
                 rely.putDouble("altitude", FakeLoc.altitude)
                 rely.putDouble("speed", FakeLoc.speed)
+                rely.putFloat("accuracy", FakeLoc.accuracy)
                 rely.putDouble("speed_amplitude", FakeLoc.speedAmplitude)
                 rely.putBoolean("has_bearings", FakeLoc.hasBearings)
                 rely.putDouble("bearing", FakeLoc.bearing)
@@ -265,6 +265,8 @@ object RemoteCommandHandler {
                 rely.putBoolean("hide_mock", FakeLoc.hideMock)
                 rely.putBoolean("hook_wifi", FakeLoc.hookWifi)
                 rely.putBoolean("need_downgrade_to_2g", FakeLoc.needDowngradeToCdma)
+                rely.putInt("min_satellites", FakeLoc.minSatellites)
+                rely.putBoolean("enable_location_jitter", FakeLoc.enableLocationJitter)
                 return true
             }
             "broadcast_location" -> {

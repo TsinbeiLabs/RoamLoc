@@ -25,6 +25,7 @@ import com.tsinbei.roamloc.ext.disableFusedProvider
 import com.tsinbei.roamloc.ext.disableGetCurrentLocation
 import com.tsinbei.roamloc.ext.disableRegisterLocationListener
 import com.tsinbei.roamloc.ext.disableWifiScan
+import com.tsinbei.roamloc.ext.enableLocationJitter
 import com.tsinbei.roamloc.ext.hookSensor
 import com.tsinbei.roamloc.ext.loopBroadcastlocation
 import com.tsinbei.roamloc.ext.minSatelliteCount
@@ -72,6 +73,11 @@ class SettingsFragment : Fragment() {
         binding.accuracyValue.text = "%.2f米".format(context.accuracy)
         binding.reportDurationValue.text = "%dms".format(context.reportDuration)
         binding.satelliteCountValue.text = "%d颗".format(context.minSatelliteCount)
+        binding.locationJitterSwitch.isChecked = context.enableLocationJitter
+        binding.locationJitterSwitch.setOnCheckedChangeListener { _, isChecked ->
+            context.enableLocationJitter = isChecked
+            updateRemoteConfig()
+        }
 
         binding.altitudeLayout.setOnClickListener {
             showDialog("设置海拔高度", binding.altitudeValue.text.toString().let { it.substring(0, it.length - 1) }) {
@@ -195,7 +201,7 @@ class SettingsFragment : Fragment() {
                 it.substring(0, it.length - 2)
             }) {
                 val value = it.toIntOrNull()
-                if (value == null || value < 0) {
+                if (value == null || value < 10) {
                     Toast.makeText(context, "上报间隔不合法", Toast.LENGTH_SHORT).show()
                     return@showDialog
                 } else if (value > 1000) {
@@ -204,7 +210,7 @@ class SettingsFragment : Fragment() {
                 }
                 context.reportDuration = value
                 binding.reportDurationValue.text = "%dms".format(value)
-                showToast("重新启动APP生效")
+                showToast("新的上报间隔已保存")
             }
         }
 

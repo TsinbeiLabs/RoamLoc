@@ -49,7 +49,7 @@ object LocationProviderManagerHook {
             location.isMock = false
         }
         location.altitude = FakeLoc.offset_altitude
-        location.speed = originLocation.speed
+        location.speed = FakeLoc.simulatedSpeed()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             location.speedAccuracyMetersPerSecond = 0F
         }
@@ -272,7 +272,7 @@ object LocationProviderManagerHook {
                     location.isMock = false
                 }
                 location.altitude = FakeLoc.offset_altitude
-                location.speed = originLocation.speed
+                location.speed = FakeLoc.simulatedSpeed()
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     location.speedAccuracyMetersPerSecond = 0F
                 }

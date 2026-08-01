@@ -78,6 +78,13 @@ var Context.minSatelliteCount: Int
         putInt("minSatelliteCount", value)
     }
 
+var Context.enableLocationJitter: Boolean
+    get() = sharedPrefs.getBoolean("enableLocationJitter", FakeLoc.enableLocationJitter)
+    set(value) = sharedPrefs.edit {
+        putBoolean("enableLocationJitter", value)
+        FakeLoc.enableLocationJitter = value
+    }
+
 var Context.mapType: Int
     get() = sharedPrefs.getInt("mapType", BaiduMap.MAP_TYPE_NORMAL)
     set(value) = sharedPrefs.edit {
@@ -102,7 +109,7 @@ var Context.speed: Double
     }
 
 var Context.altitude: Double
-    get() = sharedPrefs.getFloat("altitude", FakeLoc.offset_altitude.toFloat()).toDouble()
+    get() = sharedPrefs.getFloat("altitude", FakeLoc.altitude.toFloat()).toDouble()
     set(value) = sharedPrefs.edit {
         putFloat("altitude", value.toFloat())
     }
@@ -214,7 +221,7 @@ var Context.enableNMEA: Boolean
     }
 
 var Context.disableWifiScan: Boolean
-    get() = sharedPrefs.getBoolean("disableWifiScan", FakeLoc.enableNMEA)
+    get() = sharedPrefs.getBoolean("disableWifiScan", FakeLoc.enableMockWifi)
     set(value) = sharedPrefs.edit {
         putBoolean("disableWifiScan", value)
         FakeLoc.enableMockWifi = value

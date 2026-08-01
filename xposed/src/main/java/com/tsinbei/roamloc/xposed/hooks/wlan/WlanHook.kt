@@ -15,6 +15,7 @@ import com.tsinbei.roamloc.xposed.utils.afterHook
 import com.tsinbei.roamloc.xposed.utils.beforeHook
 import com.tsinbei.roamloc.xposed.utils.hookAllMethods
 import com.tsinbei.roamloc.xposed.utils.hookMethodAfter
+import com.tsinbei.roamloc.xposed.utils.hookBefore
 import com.tsinbei.roamloc.xposed.utils.toClass
 
 object WlanHook {
@@ -74,6 +75,22 @@ object WlanHook {
                 result = wifiInfo
             }
         })
+
+        wifiClazz.declaredMethods
+            .filter { it.name == "startScan" && it.returnType == Boolean::class.javaPrimitiveType }
+            .forEach { method ->
+                method.hookBefore {
+                    if (FakeLoc.enableMockWifi) result = false
+                }
+            }
+
+        wifiClazz.declaredMethods
+            .filter { it.name == "isScanAlwaysAvailable" && it.returnType == Boolean::class.javaPrimitiveType }
+            .forEach { method ->
+                method.hookBefore {
+                    if (FakeLoc.enableMockWifi) result = false
+                }
+            }
 
         wifiClazz.hookAllMethods("getScanResults", afterHook {
             val packageName = args[0] as? String

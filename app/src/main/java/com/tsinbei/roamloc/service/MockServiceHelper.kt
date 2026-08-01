@@ -9,12 +9,14 @@ import android.util.Log
 import com.tsinbei.roamloc.RoamLoc
 import com.tsinbei.roamloc.android.root.ShellUtils
 import com.tsinbei.roamloc.ext.altitude
+import com.tsinbei.roamloc.ext.accuracy
 import com.tsinbei.roamloc.ext.debug
 import com.tsinbei.roamloc.ext.disableFusedProvider
 import com.tsinbei.roamloc.ext.disableGetCurrentLocation
 import com.tsinbei.roamloc.ext.disableRegisterLocationListener
 import com.tsinbei.roamloc.ext.enableAGPS
 import com.tsinbei.roamloc.ext.enableGetFromLocation
+import com.tsinbei.roamloc.ext.enableLocationJitter
 import com.tsinbei.roamloc.ext.enableNMEA
 import com.tsinbei.roamloc.ext.enableRequestGeofence
 import com.tsinbei.roamloc.ext.minSatelliteCount
@@ -313,12 +315,14 @@ object MockServiceHelper {
 
         FakeLoc.altitude = context.altitude
         FakeLoc.speed = context.speed
+        FakeLoc.accuracy = context.accuracy
         FakeLoc.enableDebugLog = context.debug
         FakeLoc.disableGetCurrentLocation = context.disableGetCurrentLocation
         FakeLoc.disableRegisterLocationListener = context.disableRegisterLocationListener
         FakeLoc.disableFusedLocation = context.disableFusedProvider
         FakeLoc.needDowngradeToCdma = context.needDowngradeToCdma
         FakeLoc.minSatellites = context.minSatelliteCount
+        FakeLoc.enableLocationJitter = context.enableLocationJitter
         FakeLoc.enableAGPS = context.enableAGPS
         FakeLoc.enableNMEA = context.enableNMEA
         FakeLoc.disableRequestGeofence = !context.enableRequestGeofence
@@ -329,12 +333,14 @@ object MockServiceHelper {
         rely.putBoolean("enable", FakeLoc.enable)
         rely.putDouble("altitude", FakeLoc.altitude)
         rely.putDouble("speed", FakeLoc.speed)
+        rely.putFloat("accuracy", FakeLoc.accuracy)
         rely.putBoolean("enable_debug_log", FakeLoc.enableDebugLog)
         rely.putBoolean("disable_get_current_location", FakeLoc.disableGetCurrentLocation)
         rely.putBoolean("disable_register_location_listener", FakeLoc.disableRegisterLocationListener)
         rely.putBoolean("disable_fused_location", FakeLoc.disableFusedLocation)
         rely.putBoolean("need_downgrade_to_2g", FakeLoc.needDowngradeToCdma)
         rely.putInt("min_satellites", FakeLoc.minSatellites)
+        rely.putBoolean("enable_location_jitter", FakeLoc.enableLocationJitter)
         rely.putBoolean("enable_agps", FakeLoc.enableAGPS)
         rely.putBoolean("enable_nmea", FakeLoc.enableNMEA)
         rely.putBoolean("disable_request_geofence", FakeLoc.disableRequestGeofence)
@@ -350,7 +356,6 @@ object MockServiceHelper {
 
     private fun startLoopBroadcastLocation(locationManager: LocationManager) {
         val appContext = RoamLoc.appContext
-        val delayTime = appContext.reportDuration.toLong()
         if (isRunning) return
         if (!appContext.loopBroadcastlocation) return
 
@@ -369,7 +374,7 @@ object MockServiceHelper {
                     }
 
                     broadcastLocation(locationManager)
-                    Thread.sleep(delayTime)
+                    Thread.sleep(appContext.reportDuration.coerceIn(10, 1000).toLong())
                 } catch (e: InterruptedException) {
                     if (FakeLoc.enableDebugLog) {
                         Log.d("MockServiceHelper", "loopBoardcast: Stop")

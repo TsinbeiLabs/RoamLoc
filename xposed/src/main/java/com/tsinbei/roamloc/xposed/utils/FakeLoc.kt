@@ -88,6 +88,10 @@ object FakeLoc {
      */
     var minSatellites = 12
 
+    /** Adds small coordinate and altitude variation to simulated reports. */
+    @Volatile
+    var enableLocationJitter = true
+
     /**
      * 反定位复原加强（启用后将导致部分应用在关闭RoamLoc后需要重新启动才能重新获取定位）
      */
@@ -102,11 +106,17 @@ object FakeLoc {
     @Volatile var altitude = 80.0
 
     val offset_altitude : Double
-        get() = altitude + Random.nextDouble(-0.25, 0.25)
+        get() = if (enableLocationJitter) {
+            altitude + Random.nextDouble(-0.25, 0.25)
+        } else {
+            altitude
+        }
 
     @Volatile var speed = 3.05
 
     var speedAmplitude = 1.0
+
+    fun simulatedSpeed(): Float = speed.coerceAtLeast(0.0).toFloat()
 
     @Volatile var hasBearings = false
 
@@ -143,9 +153,17 @@ object FakeLoc {
         return radius * c
     }
 
-    fun jitterLocation(lat: Double = latitude, lon: Double = longitude, n: Double = Random.nextDouble(0.0, accuracy.toDouble()), angle: Double = bearing): Pair<Double, Double> {
+    fun jitterLocation(lat: Double = latitude, lon: Double = longitude, n: Double = Double.NaN, angle: Double = bearing): Pair<Double, Double> {
+        if (!enableLocationJitter) return Pair(lat, lon)
+
         val earthRadius = 6371000.0
-        val radiusInDegrees = n / 15 / earthRadius * (180 / PI)
+        val distance = if (n.isNaN()) {
+            val maxDistance = accuracy.toDouble().coerceAtLeast(0.0)
+            if (maxDistance == 0.0) 0.0 else Random.nextDouble(0.0, maxDistance)
+        } else {
+            n.coerceAtLeast(0.0)
+        }
+        val radiusInDegrees = distance / 15 / earthRadius * (180 / PI)
 
         val jitterAngle = if (Random.nextBoolean()) angle + 45 else angle - 45
 
