@@ -5,7 +5,7 @@ import android.content.pm.FeatureInfo
 import android.hardware.Sensor
 import android.hardware.SensorEventListener
 import android.util.ArrayMap
-import de.robv.android.xposed.XposedHelpers
+import com.tsinbei.roamloc.xposed.compat.XposedHelpers
 import com.tsinbei.roamloc.xposed.utils.FakeLoc
 import com.tsinbei.roamloc.xposed.utils.Logger
 import com.tsinbei.roamloc.xposed.utils.afterHook

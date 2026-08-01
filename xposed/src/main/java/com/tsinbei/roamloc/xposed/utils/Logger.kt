@@ -1,6 +1,6 @@
 package com.tsinbei.roamloc.xposed.utils
 
-import de.robv.android.xposed.XposedBridge
+import com.tsinbei.roamloc.xposed.compat.XposedBridge
 
 object Logger {
     private fun isEnableLog(): Boolean {

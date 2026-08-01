@@ -9,7 +9,7 @@ android {
     ndkVersion = "26.1.10909125"
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -51,7 +51,7 @@ android {
 }
 
 dependencies {
-    compileOnly(libs.xposed.api)
+    compileOnly(libs.libxposed.api)
     compileOnly(project(":system-api"))
     implementation(project(":nmea"))
 

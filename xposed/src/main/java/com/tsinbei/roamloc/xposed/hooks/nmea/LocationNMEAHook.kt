@@ -1,8 +1,8 @@
 package com.tsinbei.roamloc.xposed.hooks.nmea
 
-import de.robv.android.xposed.XC_MethodHook
-import de.robv.android.xposed.XposedBridge
-import de.robv.android.xposed.XposedHelpers
+import com.tsinbei.roamloc.xposed.compat.XC_MethodHook
+import com.tsinbei.roamloc.xposed.compat.XposedBridge
+import com.tsinbei.roamloc.xposed.compat.XposedHelpers
 import com.tsinbei.roamloc.xposed.BaseLocationHook
 import com.tsinbei.roamloc.xposed.utils.FakeLoc
 import com.tsinbei.roamloc.xposed.utils.Logger

@@ -10,9 +10,9 @@ import android.os.DeadObjectException
 import android.os.IBinder
 import android.os.IInterface
 import android.os.Parcel
-import de.robv.android.xposed.XC_MethodHook
-import de.robv.android.xposed.XposedBridge
-import de.robv.android.xposed.XposedHelpers
+import com.tsinbei.roamloc.xposed.compat.XC_MethodHook
+import com.tsinbei.roamloc.xposed.compat.XposedBridge
+import com.tsinbei.roamloc.xposed.compat.XposedHelpers
 import com.tsinbei.roamloc.xposed.BaseLocationHook
 import com.tsinbei.roamloc.xposed.RemoteCommandHandler
 import com.tsinbei.roamloc.xposed.hooks.gnss.GnssHook

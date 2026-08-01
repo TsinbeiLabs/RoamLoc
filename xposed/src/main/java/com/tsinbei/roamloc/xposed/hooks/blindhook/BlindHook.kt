@@ -1,7 +1,7 @@
 package com.tsinbei.roamloc.xposed.hooks.blindhook
 
 import android.location.Location
-import de.robv.android.xposed.XC_MethodHook
+import com.tsinbei.roamloc.xposed.compat.XC_MethodHook
 import com.tsinbei.roamloc.xposed.utils.FakeLoc
 import com.tsinbei.roamloc.xposed.utils.Logger
 import com.tsinbei.roamloc.xposed.utils.onceHook

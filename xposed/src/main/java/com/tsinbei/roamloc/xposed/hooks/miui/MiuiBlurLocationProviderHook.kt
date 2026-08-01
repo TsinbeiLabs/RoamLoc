@@ -6,8 +6,8 @@ import android.telephony.CellIdentityCdma
 import android.telephony.CellInfo
 import android.telephony.CellInfoCdma
 import android.telephony.CellSignalStrengthCdma
-import de.robv.android.xposed.XC_MethodHook
-import de.robv.android.xposed.XposedHelpers
+import com.tsinbei.roamloc.xposed.compat.XC_MethodHook
+import com.tsinbei.roamloc.xposed.compat.XposedHelpers
 import com.tsinbei.roamloc.xposed.BaseLocationHook
 import com.tsinbei.roamloc.xposed.hooks.blindhook.BlindHookLocation
 import com.tsinbei.roamloc.xposed.utils.BinderUtils

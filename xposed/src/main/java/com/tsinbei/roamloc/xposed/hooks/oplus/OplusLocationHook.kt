@@ -2,7 +2,7 @@ package com.tsinbei.roamloc.xposed.hooks.oplus
 
 import android.location.LocationListener
 import android.os.Bundle
-import de.robv.android.xposed.XposedHelpers
+import com.tsinbei.roamloc.xposed.compat.XposedHelpers
 import com.tsinbei.roamloc.xposed.BaseLocationHook
 import com.tsinbei.roamloc.xposed.hooks.blindhook.BlindHookLocation
 import com.tsinbei.roamloc.xposed.hooks.blindhook.BlindHookLocation.invoke

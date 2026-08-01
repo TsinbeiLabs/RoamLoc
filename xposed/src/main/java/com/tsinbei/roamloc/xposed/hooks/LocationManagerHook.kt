@@ -1,9 +1,9 @@
 package com.tsinbei.roamloc.xposed.hooks
 
 import android.location.Location
-import de.robv.android.xposed.XC_MethodHook
-import de.robv.android.xposed.XposedBridge
-import de.robv.android.xposed.XposedHelpers
+import com.tsinbei.roamloc.xposed.compat.XC_MethodHook
+import com.tsinbei.roamloc.xposed.compat.XposedBridge
+import com.tsinbei.roamloc.xposed.compat.XposedHelpers
 import com.tsinbei.roamloc.xposed.BaseLocationHook
 import com.tsinbei.roamloc.xposed.utils.FakeLoc
 import com.tsinbei.roamloc.xposed.utils.Logger
@@ -65,7 +65,7 @@ object LocationManagerHook: BaseLocationHook() {
             }.map {
                 XposedBridge.hookMethod(it, object : XC_MethodHook() {
                     override fun beforeHookedMethod(param: MethodHookParam?) {
-                        if (param == null || param.args.size > 1 || param.args[1] == null) return
+                        if (param == null || param.args.size <= 1 || param.args[1] == null) return
 
                         val listener = param.args[1]
                         listener.javaClass.onceHookAllMethod("onLocationChanged", hookOnLocation)
@@ -77,7 +77,7 @@ object LocationManagerHook: BaseLocationHook() {
 
         val hookRequestLocationUpdates = object: XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam?) {
-                if (param == null || param.args.isEmpty() || param.args[1] == null) return
+                if (param == null || param.args.size <= 1 || param.args[1] == null) return
 
                 param.args.filterIsInstance<android.location.LocationListener>().also {
                     if (it.isEmpty()) {

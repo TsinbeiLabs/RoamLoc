@@ -6,9 +6,9 @@ import android.os.Build
 import android.telephony.CellIdentity
 import android.telephony.CellInfo
 import android.util.ArrayMap
-import de.robv.android.xposed.XC_MethodHook
-import de.robv.android.xposed.XposedBridge
-import de.robv.android.xposed.XposedHelpers
+import com.tsinbei.roamloc.xposed.compat.XC_MethodHook
+import com.tsinbei.roamloc.xposed.compat.XposedBridge
+import com.tsinbei.roamloc.xposed.compat.XposedHelpers
 import com.tsinbei.roamloc.xposed.hooks.BasicLocationHook.injectLocation
 import com.tsinbei.roamloc.xposed.hooks.blindhook.BlindHookLocation
 import com.tsinbei.roamloc.xposed.utils.FakeLoc
@@ -94,7 +94,7 @@ object LocationProviderManagerHook {
                 ?: return@run
             val cLocationResult = XposedHelpers.findClassIfExists("android.location.LocationResult", classLoader)
                 ?: return@run
-            val mReportLocation = XposedHelpers.findMethodExactIfExists(cAbstractLocationProvider.javaClass, "reportLocation", cLocationResult)
+            val mReportLocation = XposedHelpers.findMethodExactIfExists(cAbstractLocationProvider, "reportLocation", cLocationResult)
                 ?: return@run
 
             mReportLocation.onceHook(hookOnFetchLocationResult)
@@ -106,6 +106,7 @@ object LocationProviderManagerHook {
 
             XposedBridge.hookAllConstructors(cInternalState, object: XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam) {
+                    if (param.args.isEmpty()) return
                     val listener = param.args[0] ?: return
 
                     if (FakeLoc.enableDebugLog) {

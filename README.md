@@ -2,6 +2,8 @@
 
 RoamLoc is an LSPosed-based virtual location module that hooks Android system services to provide location simulation. The companion app provides controls for configuring and running the module.
 
+The module uses the modern libxposed API 102 and requires an Xposed framework implementation with system-process support. Legacy `XposedBridge` module loading is not supported.
+
 ## Features
 
 - Simulates location across supported providers.

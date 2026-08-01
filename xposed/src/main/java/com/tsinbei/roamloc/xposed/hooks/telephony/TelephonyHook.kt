@@ -10,8 +10,8 @@ import android.telephony.CellInfoCdma
 import android.telephony.CellSignalStrengthCdma
 import android.telephony.NeighboringCellInfo
 import android.telephony.SignalStrength
-import de.robv.android.xposed.XposedBridge
-import de.robv.android.xposed.XposedHelpers
+import com.tsinbei.roamloc.xposed.compat.XposedBridge
+import com.tsinbei.roamloc.xposed.compat.XposedHelpers
 import com.tsinbei.roamloc.xposed.utils.BinderUtils
 import com.tsinbei.roamloc.xposed.utils.FakeLoc
 import com.tsinbei.roamloc.xposed.utils.Logger
@@ -135,7 +135,7 @@ object TelephonyHook: BaseTelephonyHook() {
                     result = cResult
                 }
             }
-            if (XposedBridge.hookMethod(it, hookGetAllCellInfo) == null) {
+            if (runCatching { XposedBridge.hookMethod(it, hookGetAllCellInfo) }.isFailure) {
                 Logger.error("Hook PhoneInterfaceManager.getAllCellInfo failed")
             }
         }
