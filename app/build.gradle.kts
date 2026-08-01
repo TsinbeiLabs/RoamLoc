@@ -1,5 +1,6 @@
 import com.android.build.api.dsl.ApplicationExtension
 import java.io.ByteArrayOutputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -30,7 +31,8 @@ android {
 //            throw GradleException("在 CI 环境中必须提供 google-services.json 文件!")
 //        }
 
-        manifestPlaceholders["BUGLY_APPID"] = "222f9ef298"
+        manifestPlaceholders["BAIDU_API_KEY"] = getLocalOrEnvironmentSecret("BAIDU_API_KEY")
+        manifestPlaceholders["BUGLY_APPID"] = getLocalOrEnvironmentSecret("BUGLY_APP_ID")
 
         val publicIp = try {
             val isWindows = org.gradle.internal.os.OperatingSystem.current().isWindows
@@ -261,5 +263,16 @@ fun getVersionCode(): Int {
 
 fun getVersionName(): String {
     return getGitCommitHash()
+}
+
+fun Project.getLocalOrEnvironmentSecret(name: String): String {
+    providers.environmentVariable(name).orNull?.takeIf { it.isNotBlank() }?.let { return it }
+
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (!localPropertiesFile.exists()) return ""
+
+    return Properties().apply {
+        localPropertiesFile.inputStream().use(::load)
+    }.getProperty(name, "")
 }
 

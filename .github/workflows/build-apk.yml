@@ -51,6 +51,12 @@ jobs:
         run: |
           echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 -d > app/google-services.json
 
+      - name: Validate service credentials
+        env:
+          BAIDU_API_KEY: ${{ secrets.BAIDU_API_KEY }}
+        run: |
+          test -n "$BAIDU_API_KEY" || { echo "Missing repository secret: BAIDU_API_KEY"; exit 1; }
+
       - name: Build with Gradle
         run: |
           echo ${{ secrets.SIGN_KEYSTORE_BASE64 }} | base64 -d > keystore.jks
@@ -60,6 +66,8 @@ jobs:
           echo "APK_FILE_ARM64=$(find app/build/outputs/apk/arm64/release -name '*.apk')" >> $GITHUB_ENV
           echo "APK_FILE_X86_64=$(find app/build/outputs/apk/x64/release -name '*.apk')" >> $GITHUB_ENV
         env:
+          BAIDU_API_KEY: ${{ secrets.BAIDU_API_KEY }}
+          BUGLY_APP_ID: ${{ secrets.BUGLY_APP_ID }}
           KEYSTORE_PATH: "../keystore.jks"
           KEYSTORE_PASSWORD: ${{ secrets.SIGN_KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.SIGN_ALIAS }}
