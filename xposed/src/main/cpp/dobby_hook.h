@@ -1,5 +1,5 @@
-#ifndef PORTAL_DOBBY_HOOK_H
-#define PORTAL_DOBBY_HOOK_H
+#ifndef ROAMLOC_DOBBY_HOOK_H
+#define ROAMLOC_DOBBY_HOOK_H
 
 #include <unistd.h>
 #include <dobby.h>
@@ -27,4 +27,4 @@ void* InlineHook(void* target, void* hooker) {
     }
 }
 
-#endif //PORTAL_DOBBY_HOOK_H
+#endif //ROAMLOC_DOBBY_HOOK_H

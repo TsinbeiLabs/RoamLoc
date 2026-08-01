@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "moe.fuqiuluo.portal"
+    namespace = "com.tsinbei.roamloc"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "moe.fuqiuluo.portal"
+        applicationId = "com.tsinbei.roamloc"
         minSdk = 26
         targetSdk = 35
         versionCode = getVersionCode()
@@ -98,7 +98,7 @@ android {
                     "x64" -> "x86_64"
                     else -> abi
                 }
-                it.outputFileName = "Portal-v${versionName}-${abiName}.apk"
+                it.outputFileName = "RoamLoc-v${versionName}-${abiName}.apk"
             }
     }
 

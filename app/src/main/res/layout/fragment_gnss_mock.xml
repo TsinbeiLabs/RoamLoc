@@ -34,7 +34,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/portal_mini_title_color"
+                        android:textColor="@color/roamloc_mini_title_color"
                         android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
                         android:text="@string/satellites_info"/>
 
@@ -44,7 +44,7 @@
                         android:layout_height="wrap_content"
                         android:padding="4dp">
 
-                        <moe.fuqiuluo.portal.android.widget.SatelliteRadarView
+                        <com.tsinbei.roamloc.android.widget.SatelliteRadarView
                             android:id="@+id/satellite_rada_view"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -373,11 +373,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                                android:checkMarkTint="@color/portal_mock_off"
+                                android:checkMarkTint="@color/roamloc_mock_off"
                                 android:checked="true"
                                 android:gravity="center"
                                 android:text="随机化卫星信息"
-                                android:textColor="@color/portal_mock_off"
+                                android:textColor="@color/roamloc_mock_off"
                                 android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -402,7 +402,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/portal_mini_title_color"
+                        android:textColor="@color/roamloc_mini_title_color"
                         android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
                         android:text="功能设置"/>
 

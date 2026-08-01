@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">PortalEX</string>
+  <string name="app_name">RoamLoc</string>
   <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
   <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
-  <string name="nav_header_title">Portal</string>
-  <string name="nav_header_subtitle">学習とコミュニケーションのみのため、3 時間以内に削除してください</string>
+  <string name="nav_header_title">RoamLoc</string>
   <string name="nav_header_desc">ナビゲーションヘッダー</string>
   <string name="action_settings">設定</string>
   <string name="action_search">検索</string>

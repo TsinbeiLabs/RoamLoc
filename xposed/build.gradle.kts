@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "moe.fuqiuluo.xposed"
+    namespace = "com.tsinbei.roamloc.xposed"
     compileSdk = 35
     ndkVersion = "26.1.10909125"
 
@@ -64,5 +64,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.github.getActivity:DeviceCompat:2.6")
 }

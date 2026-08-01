@@ -40,7 +40,7 @@ buildscript {
     dependencies {}
 }
 
-rootProject.name = "Portal"
+rootProject.name = "RoamLoc"
 include(":app")
 include(":xposed")
 include(":system-api")
