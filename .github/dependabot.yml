@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: gradle
     directory: "/"
     schedule:
-      interval: monthly
+      interval: daily
       time: "21:00"
       timezone: "Asia/Shanghai"
     target-branch: master
@@ -16,7 +16,7 @@ updates:
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: monthly
+      interval: daily
       time: "21:15"
       timezone: "Asia/Shanghai"
     target-branch: master
